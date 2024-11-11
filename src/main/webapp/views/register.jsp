@@ -5,110 +5,76 @@
   Time: 9:50 AM
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Register Account</title>
-    <style>
-        * {box-sizing: border-box}
-
-        /* Full-width input fields */
-        input[type=text], input[type=password] {
-            width: 100%;
-            padding: 15px;
-            margin: 5px 0 22px 0;
-            display: inline-block;
-            border: none;
-            background: #f1f1f1;
-        }
-
-        input[type=text]:focus, input[type=password]:focus {
-            background-color: #ddd;
-            outline: none;
-        }
-
-        hr {
-            border: 1px solid #f1f1f1;
-            margin-bottom: 25px;
-        }
-
-        /* Set a style for all buttons */
-        button {
-            background-color: #04AA6D;
-            color: white;
-            padding: 14px 20px;
-            margin: 8px 0;
-            border: none;
-            cursor: pointer;
-            width: 100%;
-            opacity: 0.9;
-        }
-
-        button:hover {
-            opacity:1;
-        }
-
-        /* Extra styles for the cancel button */
-        .cancelbtn {
-            padding: 14px 20px;
-            background-color: #f44336;
-        }
-
-        /* Float cancel and signup buttons and add an equal width */
-        .cancelbtn, .signupbtn {
-            float: left;
-            width: 50%;
-        }
-
-        /* Add padding to container elements */
-        .container {
-            padding: 16px;
-        }
-
-        /* Clear floats */
-        .clearfix::after {
-            content: "";
-            clear: both;
-            display: table;
-        }
-
-        /* Change styles for cancel button and signup button on extra small screens */
-        @media screen and (max-width: 300px) {
-            .cancelbtn, .signupbtn {
-                width: 100%;
-            }
-        }
-    </style>
-</head>
-<body>
-<form action="${pageContext.request.contextPath}/register"
-      method="post"
->
-    <!--register area start-->
-    <div class="col-lg-6 col-md-6">
-        <div class="account_form register">
-            <h2>Register</h2>
-            <form action="#">
-                <p>
-                    <label for="username"><b>Username</b></label>
-                    <input type="text" placeholder="Enter username" name="username" required>
-                </p>
-                <p>
-                    <label for="username"><b>Username</b></label>
-                    <input type="text" placeholder="Enter username" name="username" required>
-                </p>
-                <p>
-                    <label for="password-repeat"><b>Repeat Password</b></label>
-                    <input type="password" placeholder="Repeat Password" name="password-repeat" required>
-                </p>
-                <div class="login_submit">
-                    <button type="submit">Register</button>
-                    <button type="button" class="cancelbtn"><a href="${pageContext.request.contextPath}/login">Cancel</a></button>
+<%@ include file="/commons/taglib.jsp"%>
+<div class="wrapper">
+    <c:if test="${alert !=null}">
+        <h3 class="alert alertdanger">${alert}</h3>
+    </c:if>
+    <section class="login-content">
+        <div class="container">
+            <div class="row align-items-center justify-content-center height-self-center">
+                <div class="col-lg-8">
+                    <div class="card auth-card">
+                        <div class="card-body p-0">
+                            <div class="d-flex align-items-center auth-content">
+                                <div class="col-lg-7 align-self-center">
+                                    <div class="p-3">
+                                        <h2 class="mb-2">Sign Up</h2>
+                                        <p>Create your POSDash account.</p>
+                                        <form action="${pageContext.request.contextPath}/register" method="post">
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div class="floating-label form-group">
+                                                        <input class="floating-input form-control" type="text" name="fullname" placeholder=" ">
+                                                        <label>Full Name</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="floating-label form-group">
+                                                        <input class="floating-input form-control" type="email" name="email" placeholder=" ">
+                                                        <label>Email</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="floating-label form-group">
+                                                        <input class="floating-input form-control" type="text" name="phone" placeholder=" ">
+                                                        <label>Phone No.</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="floating-label form-group">
+                                                        <input class="floating-input form-control" type="password" name="password" placeholder=" ">
+                                                        <label>Password</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="floating-label form-group">
+                                                        <input class="floating-input form-control" type="password" name="confirmPassword" placeholder=" ">
+                                                        <label>Confirm Password</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="custom-control custom-checkbox mb-3">
+                                                        <input type="checkbox" class="custom-control-input" id="customCheck1">
+                                                        <label class="custom-control-label" for="customCheck1">I agree with the terms of use</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <button type="submit" class="btn btn-primary">Sign Up</button>
+                                            <p class="mt-3">
+                                                Already have an Account <a href="${pageContext.request.contextPath}/login" class="text-primary">Sign In</a>
+                                            </p>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="col-lg-5 content-right">
+                                    <img src="assets/images/login/01.png" class="img-fluid image-right" alt="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </form>
+            </div>
         </div>
-    </div>
-    <!--register area end-->
-</form>
-</body>
-</html>
+    </section>
+</div>

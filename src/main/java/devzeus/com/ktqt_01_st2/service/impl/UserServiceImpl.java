@@ -11,15 +11,26 @@ public class UserServiceImpl implements UserService {
     UserDao userDao = new UserDaoImpl();
 
     @Override
-    public User login(String username, String password) {
-        return this.getUserByUsername(username);
+    public User login(String email, String password) {
+        try{
+            User user = this.getUserByEmail(email);
+            if(user != null && user.getPasswd().equals(password)){
+               return user;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
     }
 
     @Override
-    public User register(String username, String password) {
+    public User register(String email, String password, String fullName, String phone) {
         User user = new User();
-        user.setEmail(username);
+        user.setEmail(email);
+        user.setFullname(fullName);
+        user.setPhone(phone);
         user.setPasswd(password);
+        user.setIs_admin(false);
         userDao.saveUser(user);
         if (user.getEmail() == null)
             return null;
@@ -32,8 +43,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUserByUsername(String username) {
-        return null;
+    public User getUserByEmail(String email) {
+        return userDao.findByEmail(email);
     }
 
     @Override

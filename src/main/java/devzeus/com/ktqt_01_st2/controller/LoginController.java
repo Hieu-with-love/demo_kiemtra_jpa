@@ -25,27 +25,28 @@ public class LoginController extends HttpServlet {
         resp.setContentType("text/html");
         resp.setCharacterEncoding("UTF-8");
         req.setCharacterEncoding("UTF-8");
-        String username = req.getParameter("username");
+        String email = req.getParameter("email");
         String password = req.getParameter("password");
         String remember = req.getParameter("remember");
-        boolean isRememberMe = remember.equals("on");
+
+        boolean isRememberMe = remember != null;
 
         String msg = "This is default message";
-        if (username == null || password == null){
+        if (email == null || password == null){
             msg = "Username or password cannot be null";
             req.setAttribute("alert", msg);
             req.getRequestDispatcher("/views/login.jsp").forward(req, resp);
         }
-        User user = userService.login(username, password);
-        if (user == null){
-            msg = "Tài khoản hoặc mật khẩu không đúng";
+        User userExisting = userService.login(email, password);
+        if (userExisting == null){
+            msg = "Tài khoản khong ton tai";
             req.setAttribute("alert", msg);
             req.getRequestDispatcher("/views/login.jsp").forward(req, resp);
         }else{
             HttpSession session = req.getSession(true);
-            session.setAttribute("account", user);
+            session.setAttribute("account", userExisting);
             if(isRememberMe){
-                saveRememberMe(resp, username);
+                saveRememberMe(resp, email);
             }
             resp.sendRedirect(req.getContextPath()+"/waiting");
         }

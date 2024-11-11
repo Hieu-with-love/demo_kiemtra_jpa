@@ -2,8 +2,13 @@
 <persistence xmlns="https://jakarta.ee/xml/ns/persistence"
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_2.xsd"
-             version="3.2">
+             version="3.0">
     <persistence-unit name="exam_jpa">
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <class>devzeus.com.ktqt_01_st2.model.User</class>
+        <class>devzeus.com.ktqt_01_st2.model.Book</class>
+        <class>devzeus.com.ktqt_01_st2.model.Rating</class>
+        <class>devzeus.com.ktqt_01_st2.model.Author</class>
         <properties>
             <!-- Configure database properties -->
             <!-- Configure database properties -->
@@ -13,6 +18,9 @@
             <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
             <!-- Configure Hibernate as provider -->
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
+            <property name="hibernate.hbm2ddl.auto" value="update"/> <!-- Tự động tạo bảng -->
+            <property name="hibernate.show_sql" value="true"/> <!-- Hiển thị SQL trong log -->
+            <property name="hibernate.format_sql" value="true"/>
         </properties>
     </persistence-unit>
 </persistence>

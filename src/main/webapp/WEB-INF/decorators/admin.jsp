@@ -29,19 +29,13 @@
     </div>
 </div>
 <!-- loader END -->
+
 <!-- Wrapper Start -->
 <div class="wrapper">
-    <%@include file="/commons/admin/header.jsp"%>
-
-    <!-- Content of page, call by jsp syntax-->
-    <div class="main-wrapper">
-        <div class="container">
-            <sitemesh:write property="body"/>
-        </div>
-    </div>
-    <!-- Content of page, call by jsp syntax-->
-    
+    <%@ include file="/commons/admin/header.jsp"%>
+    <sitemesh:write property="body"/>
 </div>
+<!-- Wrapper End-->
 <%@include file="/commons/admin/footer.jsp"%>
 <!-- Backend Bundle JavaScript -->
 <script src="${URL}template/assets/js/backend-bundle.min.js"></script>

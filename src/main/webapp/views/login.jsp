@@ -8,7 +8,7 @@
 <%@ include file="/commons/taglib.jsp"%>
 <div class="wrapper">
     <c:if test="${alert !=null}">
-        <h3 class="alert alertdanger">${alert}</h3>
+        <h3 class="alert alertdanger" style="color: red">${alert}</h3>
     </c:if>
     <section class="login-content">
         <div class="container">
@@ -21,7 +21,7 @@
                                     <div class="p-3">
                                         <h2 class="mb-2">Sign In</h2>
                                         <p>Login to stay connected.</p>
-                                        <form>
+                                        <form action="${pageContext.request.contextPath}/login" method="post">
                                             <div class="row">
                                                 <div class="col-lg-12">
                                                     <div class="floating-label form-group">
@@ -47,7 +47,7 @@
                                             </div>
                                             <button type="submit" class="btn btn-primary">Sign In</button>
                                             <p class="mt-3">
-                                                Create an Account <a href="auth-sign-up.html" class="text-primary">Sign Up</a>
+                                                Create an Account <a href="${pageContext.request.contextPath}/register" class="text-primary">Sign Up</a>
                                             </p>
                                         </form>
                                     </div>
