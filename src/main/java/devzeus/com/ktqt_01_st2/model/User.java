@@ -13,6 +13,8 @@ import java.util.Set;
 @Builder
 @Entity
 @Table(name = "users")
+@NamedQuery(name = "User.findAll", query = "SELECT u FROM User u")
+@NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email = :email")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

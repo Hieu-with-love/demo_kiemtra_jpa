@@ -7,7 +7,7 @@
         <properties>
             <!-- Configure database properties -->
             <!-- Configure database properties -->
-            <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/school"/>
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/bookstore_ST2"/>
             <property name="jakarta.persistence.jdbc.user" value="root"/>
             <property name="jakarta.persistence.jdbc.password" value="1234"/>
             <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
