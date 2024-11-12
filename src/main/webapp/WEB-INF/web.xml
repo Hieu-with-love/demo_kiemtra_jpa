@@ -3,14 +3,6 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
          version="6.0">
-    <servlet>
-        <servlet-name>yourServlet</servlet-name>
-        <servlet-class>your.servlet.class</servlet-class>
-        <init-param>
-            <param-name>hibernate.dialect</param-name>
-            <param-value>org.hibernate.dialect.MySQLDialect</param-value>
-        </init-param>
-    </servlet>
 
     <filter>
         <filter-name>sitemesh</filter-name>
@@ -21,15 +13,15 @@
         <filter-name>sitemesh</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>sitemesh</filter-name>
+        <url-pattern>*.jsp</url-pattern>
+        <url-pattern>*.html</url-pattern>
+    </filter-mapping>
+
     <session-config>
         <tracking-mode>COOKIE</tracking-mode>
     </session-config>
-
-    <resource-ref>
-        <description>DB Connection</description>
-        <res-ref-name>jdbc:mysql://localhost:3306/bookstore_ST2</res-ref-name>
-        <res-type>javax.sql.DataSource</res-type>
-        <res-auth>Container</res-auth>
-    </resource-ref>
 
 </web-app>

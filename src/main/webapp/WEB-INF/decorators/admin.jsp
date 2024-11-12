@@ -33,6 +33,7 @@
 <!-- Wrapper Start -->
 <div class="wrapper">
     <%@ include file="/commons/admin/header.jsp"%>
+
     <sitemesh:write property="body"/>
 </div>
 <!-- Wrapper End-->
