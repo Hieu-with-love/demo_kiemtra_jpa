@@ -72,9 +72,9 @@
                                         <a class="badge badge-info mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="View"
                                            href="#"><i class="ri-eye-line mr-0"></i></a>
                                         <a class="badge bg-success mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"
-                                           href="${pageContext.request.contextPath}/admin/book/update"><i class="ri-pencil-line mr-0"></i></a>
+                                           href="${pageContext.request.contextPath}/admin/book/update?bookId=${book.bookid}""><i class="ri-pencil-line mr-0"></i></a>
                                         <a class="badge bg-warning mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"
-                                           href="${pageContext.request.contextPath}/admin/book/delete"><i class="ri-delete-bin-line mr-0"></i></a>
+                                           href="${pageContext.request.contextPath}/admin/book/delete?bookId=${book.bookid}""><i class="ri-delete-bin-line mr-0"></i></a>
                                     </div>
                                 </td>
                             </tr>

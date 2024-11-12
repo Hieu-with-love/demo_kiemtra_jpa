@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.*;
 
-@WebServlet(urlPatterns = {"/admin/books", "/admin/book/add",})
+@WebServlet(urlPatterns = {"/admin/books", "/admin/book/add", "/admin/book/update", "/admin/book/delete"})
 @MultipartConfig
 public class BookController extends HttpServlet {
     private BookService bookService = new BookServiceImpl();
@@ -37,6 +37,15 @@ public class BookController extends HttpServlet {
             List<Author> authors = authorService.findAllAuthors();
             req.setAttribute("authors", authors);
             req.getRequestDispatcher("/views/admin/book-add.jsp").forward(req, resp);
+        } else if (url.contains("admin/book/update")) {
+            Long id = Long.parseLong(req.getParameter("bookId"));
+            Book book = bookService.findBookById(id);
+            req.setAttribute("book", book);
+            req.getRequestDispatcher("/views/admin/book-update.jsp").forward(req, resp);
+        } else if (url.contains("admin/book/delete")) {
+            Long id = Long.parseLong(req.getParameter("bookId"));
+            bookService.deleteBook(id);
+            resp.sendRedirect(req.getContextPath() + "/admin/books");
         }
     }
 
@@ -48,6 +57,18 @@ public class BookController extends HttpServlet {
             resp.setCharacterEncoding("UTF-8");
             req.setCharacterEncoding("UTF-8");
             addBook(req, resp);
+        }
+        else if (url.contains("admin/book/update")) {
+            resp.setContentType("text/html");
+            resp.setCharacterEncoding("UTF-8");
+            req.setCharacterEncoding("UTF-8");
+            updateBook(req, resp);
+        }
+        else if (url.contains("admin/book/delete")) {
+            resp.setContentType("text/html");
+            resp.setCharacterEncoding("UTF-8");
+            req.setCharacterEncoding("UTF-8");
+            deleteBook(req, resp);
         }
     }
 
@@ -112,4 +133,85 @@ public class BookController extends HttpServlet {
         }
     }
 
+    private void updateBook(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        // Get data from form
+        String title = req.getParameter("title");
+        String isbn = req.getParameter("isbn");
+        String publisher = req.getParameter("publisher");
+        Double price = Double.valueOf(req.getParameter("price"));
+        String publishDate = req.getParameter("publishDate");
+        int quantity = Integer.parseInt(req.getParameter("quantity"));
+        String existingImage = req.getParameter("pic");
+
+        // Path to store uploaded image
+        String uploadPath = getServletContext().getRealPath("") + File.separator + "uploads";
+        File uploadDir = new File(uploadPath);
+        if (!uploadDir.exists()) {
+            uploadDir.mkdirs(); // Create folder if not exist
+        }
+
+        String fname = existingImage; // Default to existing image if no new image is uploaded
+
+        try {
+            Part filePart = req.getPart("pic");
+            if (filePart != null && filePart.getSize() > 0) {
+                // Delete old image if it exists and a new image is uploaded
+                if (existingImage != null && !existingImage.isEmpty()) {
+                    File oldFile = new File(uploadPath + File.separator + existingImage);
+                    if (oldFile.exists()) {
+                        oldFile.delete();
+                    }
+                }
+
+                String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
+                String ext = fileName.substring(fileName.lastIndexOf(".") + 1);
+                fname = System.currentTimeMillis() + "." + ext;
+
+                String filePath = uploadPath + File.separator + fname;
+                filePart.write(filePath);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // Update data in the database
+        Book book = Book.builder()
+                .title(title)
+                .isbn(isbn)
+                .publisher(publisher)
+                .price(price)
+                .publish_date(publishDate)
+                .quantity(quantity)
+                .cover_image(fname)
+                .build();
+
+        boolean isUpdated = bookService.updateBook(book);
+        String msg = isUpdated ? "Book updated successfully" : "Failed to update book";
+        req.setAttribute("msg", msg);
+
+        resp.sendRedirect(req.getContextPath() + "/admin/books");
+    }
+
+    private void deleteBook(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        Long bookId = Long.parseLong(req.getParameter("bookId"));
+
+        // Fetch the book by ID to get the cover image file name
+        Book book = bookService.findBookById(bookId);
+        String coverImage = book.getCover_image();
+
+        // Delete book from the database (and its relationships with authors)
+        boolean isDeleted = bookService.deleteBook(bookId);
+
+        if (isDeleted && coverImage != null && !coverImage.isEmpty()) {
+            // Delete the cover image file
+            String uploadPath = getServletContext().getRealPath("") + File.separator + "uploads";
+            File imageFile = new File(uploadPath + File.separator + coverImage);
+            if (imageFile.exists()) {
+                imageFile.delete();
+            }
+        }
+
+        String msg = isDeleted ? "Book deleted successfully" : "Failed to delete book";
+        req.setAttribute("msg", msg);
+    }
 }
