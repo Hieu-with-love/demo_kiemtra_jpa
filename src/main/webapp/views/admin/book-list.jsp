@@ -15,7 +15,7 @@
             <h4 class="mb-3">Book List</h4>
             <p class="mb-0">The Book list effectively dictates book presentation and provides space<br> to list your Books and offering in the most appealing way.</p>
           </div>
-          <a href="page-add-Book.html" class="btn btn-primary add-list"><i class="las la-plus mr-3"></i>Add Book</a>
+          <a href="${pageContext.request.contextPath}/admin/book/add" class="btn btn-primary add-list"><i class="las la-plus mr-3"></i>Add Book</a>
         </div>
       </div>
       <div class="col-lg-12">
@@ -41,12 +41,12 @@
                   <div class="d-flex align-items-center">
                     <img src="${pageContext.request.contextPath}/uploads/${book.cover_image}" alt="Cover Image" style="width: 100px; height: 150px;" />
                     <div>
-                      Organic Cream
+                      <a href="${pageContext.request.contextPath}/user/home?bookId=${book.bookid}">Popular Books</a>
                       <p class="mb-0"><small>This is test Book</small></p>
                     </div>
                   </div>
                 </td>
-                <td>${book.title}</td>
+                <td><a href="${pageContext.request.contextPath}/user/home?bookId=${book.bookid}">${book.title}</a></td>
                 <td>${book.isbn}</td>
                 <td>
                   <c:forEach var="author" items="${book.authors}">

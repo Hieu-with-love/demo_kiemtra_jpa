@@ -81,7 +81,7 @@
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label>Description / Product Details</label>
+                                        <label>Description / Book Details</label>
                                         <textarea name="description" class="form-control" rows="4"></textarea>
                                     </div>
                                 </div>
